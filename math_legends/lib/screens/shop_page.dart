@@ -7,6 +7,8 @@ import '../configs/text_stroke.dart';
 import '../controllers/pet_controller.dart';
 import '../utils/game_data.dart';
 
+import 'buy_coins_page.dart'; 
+
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
 
@@ -123,8 +125,8 @@ class ShopPage extends StatelessWidget {
   Widget _coinHeader(int coins, BuildContext context) {
     return Center(
       child: Container(
+        margin: const EdgeInsets.only(bottom: 16), // Gives padding to the bottom list
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        width: MediaQuery.of(context).size.width * .4,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -159,6 +161,18 @@ class ShopPage extends StatelessWidget {
               fillColor: Colors.white,
               strokeColor: Colors.black,
               strokeWidth: 4,
+            ),
+            const SizedBox(width: 12),
+            GestureDetector(
+              onTap: () {
+                // <--- Navigates to the buy coins page
+                Get.to(() => const BuyCoinsPage());
+              },
+              child: const Icon(
+                Icons.add_circle,
+                color: Colors.greenAccent,
+                size: 32,
+              ),
             ),
           ],
         ),

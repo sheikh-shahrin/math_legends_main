@@ -52,7 +52,7 @@ class AboutPage extends StatelessWidget {
                     const SizedBox(height: 30),
                     _sectionTitle('Company'),
                     _bodyText(
-                      'This application is developed and maintained by the Math Legends team, '
+                      'This application is developed and maintained by Saturn Studios, '
                       'with the goal of making learning mathematics enjoyable, accessible, '
                       'and effective for students of all levels.',
                     ),

@@ -45,6 +45,7 @@ dependencies:
   image_picker:
   firebase_storage:
   fluttertoast: 
+  in_app_purchase: ^3.1.13
 
 dev_dependencies:
   flutter_test:
