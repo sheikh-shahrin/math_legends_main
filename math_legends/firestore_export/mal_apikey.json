@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "math-legends-5412b",
+  "private_key_id": "189fb21c2c98994f4610299658512082a9867ff2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCtUGpbfocFOozH\nxRpnQcfKeVQTcwEGBbiiFHLZC1zGfG4ThXl7sMLtIEr7cY/qNeEM5tR9U3iWEm1R\nHhtvcW4kaVFkO6VMiRAwC2uIwyIchZcxd1Staahw1UpA21lhjHIdFqKmHNzj2W13\nhOqE8mZG+Ec2e8E9P/9umG53svter5zZJ9Hudx5esewShcvFPp6RswpiIp5n7Rgh\nae7ejdiVsQsS5U6VqF+GFxwLTp56+bRFswJuPMWz7mR701Si3SQjvBEraXgKIQOd\nWdiFqJsQekvhhqQFYyntEY4QelPUcNA3MUZoAYt1Rb9F5jXOgxvxGjdMMCAQXwmU\nytGf9t+FAgMBAAECggEAN5vpxFmgsQjMSvzvL9pnZIvxchwgY/JJ/5dYElQW/IjI\nOPNGu21H3hXSeUNCzf9jqmQWIfA6bMyUzsY+P0/B62TvfJ22uAvyabgAVO1ncIdc\nr75+KPYR2cJWBOFcmHQb2UF+BpaUOXd2LDc1mFq+fl8DWnPy2NhD+RRnvXhsN0DS\nBk8V18ceKoXXqlrZGCODP+A7jrMxOmMUw12zUJdzbt/1lFvGGCx7q3xOUm/nzYYN\nJlogAD+IoPVJo4V/hyeEx7139rt6rgGxv2mFCbDkMPC/779A3DWRfh5IHC/oLvsk\n0LSWqIGni1mW0MEGeDheBE2ZjX2QElMqcaN6vEvKsQKBgQDlSYLHz90cFrG5PIXq\nlH6/7/5ZWKNm5skpWeK5TmnNfHQ5Q0ouqy90Taruq/PhizDAO0w6J3ewfl0fHDxb\nFNAi3qWI1TnBKJoaHZ8eDM4cBnbTU0tOR9LCa++OmCvjykAxB79WneUrtcVqRBkU\n5T4lnAsosUNV2dC5RdwueG3DjwKBgQDBgYJRFbogEFcMHpN8pL0BBOhqJbUsh0W9\nIJ0XGXs17HGaABd3hbxRPa6gaPgl6PHf+PoP4XxeGkYZlcBUg0zlbJpC8OdI57T7\ngNu9Tl3CqCt9OXXQBm8TKkKZB7gCGHdhiWuENF0j75mgzLk4kBIYaXevK5DUu6du\nlorBWWtRqwKBgQC7hV6HSlJcqZbal0wy6RWspnwP2HVzMCavQgsyYJYZb8KiHo1q\nE6kw5mB46HsCKFNLtHOIUEUMPJyuV+po12HOUudxPGoKtskpuLYs3m4m74Z5GPNK\n52TQi3QV3BBxMTVEpEBxd5s5H2WAnocg1sf3/GIH+snGSejxzdfgza9/swKBgBwt\nRpOWDVcz6ej63tEMj/UBCPLD8OC+BdqnUBiX/kf42QXqs4AU+jn+OFplTpT+mZHa\niFcdp2Vwf/qjwrDLubvCl6fdul/0VXc16UlkiuSYZlTCtDQJa80nnzD3XcT4WRHb\n18sVcOaVshInHWVuHSRu3x2jw2AmvxesViIXajgnAoGAW37B940mAranHaYn/DNL\nRKwX/j6kFlV2b8yrNvRzOyf8uVHyY4JJgMVcMPtGnX2hYQdekM58kWD36gpUZIZr\n6YhBRX6CQAvgnbZ7PIo6b9xddYstyLsYdI+wjGzbFAwUiYCe0lgr6UwONSJ24VBB\nM3FCSJs0SR4PorMgf92/C3Q=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@math-legends-5412b.iam.gserviceaccount.com",
+  "client_id": "101957228068375893031",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40math-legends-5412b.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

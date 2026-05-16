@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "179274959968",
+    "project_id": "math-legends-5412b",
+    "storage_bucket": "math-legends-5412b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179274959968:android:d21beb0fc6b8ab24b58705",
+        "android_client_info": {
+          "package_name": "com.example.math_legends"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-hEvLCHbPtN2ZVa0gxoFdGkQMWg5Y1oM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
