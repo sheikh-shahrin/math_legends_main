@@ -7,7 +7,7 @@ import '../configs/text_stroke.dart';
 import '../controllers/pet_controller.dart';
 import '../utils/game_data.dart';
 
-import 'buy_coins_page_old.dart'; 
+import 'buy_coins_page.dart'; 
 
 class ShopPage extends StatelessWidget {
   const ShopPage({super.key});
