@@ -5,7 +5,7 @@ import 'package:math_legends/configs/generic_layout.dart';
 import 'package:math_legends/configs/buttons.dart';
 import 'package:math_legends/configs/text_stroke.dart';
 import 'package:math_legends/controllers/pet_controller.dart';
-import 'package:math_legends/services/sound_service.dart';
+import '../controllers/iap_controller.dart'; // <--- IMPORT IAP CONTROLLER
 
 class BuyCoinsPage extends StatelessWidget {
   const BuyCoinsPage({super.key});
@@ -13,106 +13,103 @@ class BuyCoinsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final petCtrl = Get.find<PetController>();
+    
+    // Initialize the IAP Controller when this page is opened
+    final iapCtrl = Get.put(IapController());
 
-    // The pricing options
-    final List<Map<String, dynamic>> coinOffers = [
-      {'coins': 10, 'price': 0.99},
-      {'coins': 25, 'price': 1.99},
-      {'coins': 100, 'price': 4.99},
-      {'coins': 250, 'price': 9.99},
-    ];
+    return GenericLayout(
+      title: 'Buy Coins',
+      solidColor: Colors.blueAccent,
+      gradientColor: [Colors.blue[400]!, Colors.blue[700]!],
+      strokeColor: Colors.blue[800]!,
+      children: [
+        Obx(() {
+          final user = petCtrl.user.value;
+          return _coinHeader(user?.coins ?? 0, context);
+        }),
+        const SizedBox(height: 16),
+        
+        Expanded(
+          child: Obx(() {
+            // Loading state while fetching from Play Store
+            if (!iapCtrl.isAvailable.value) {
+              return const Center(
+                child: Text(
+                  'Store unavailable.\nPlease check your connection.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              );
+            }
 
-    return Obx(
-      () {
-        final user = petCtrl.user.value!;
+            if (iapCtrl.products.isEmpty) {
+              return const Center(child: CircularProgressIndicator(color: Colors.yellow));
+            }
 
-        return GenericLayout(
-          title: 'Buy Coins',
-          solidColor: Colors.blueAccent,
-          gradientColor: [Colors.blue[400]!, Colors.blue[700]!],
-          strokeColor: Colors.blue[800]!,
-          children: [
-            _coinHeader(user.coins!, context),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: coinOffers.length,
-                itemBuilder: (context, index) {
-                  final offer = coinOffers[index];
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: iapCtrl.products.length,
+              itemBuilder: (context, index) {
+                final product = iapCtrl.products[index];
 
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.black45,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white24),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.paid,
-                          size: 60,
-                          color: Colors.yellow,
-                        ),
-                        const SizedBox(width: 16),
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.black45,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.white24),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.paid,
+                        size: 60,
+                        color: Colors.yellow,
+                      ),
+                      const SizedBox(width: 16),
 
-                        /// INFO
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              StrokeText(
-                                '${offer['coins']} Coins',
-                                fontSize: 20,
-                                fillColor: Colors.white,
-                                strokeColor: Colors.black,
-                                strokeWidth: 5,
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        /// ACTION BUTTON
-                        CustomButton(
-                          text: '\$${offer['price']}',
-                          gradientColors: [
-                            Colors.green,
-                            Colors.green[900]!
+                      /// INFO
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StrokeText(
+                              product.title.replaceAll('(Math Legends)', '').trim(), // Cleans up default Play Store title
+                              fontSize: 20,
+                              fillColor: Colors.white,
+                              strokeColor: Colors.black,
+                              strokeWidth: 5,
+                            ),
                           ],
-                          textStrokeColor: Colors.black,
-                          borderColor: Colors.green[200]!,
-                          onPressed: () async {
-                            SoundService.playSfx('sounds/purchase.mp3');
-                            
-                            // Mock Payment execution: Instantly adding coins to the player's account
-                            user.coins = user.coins! + (offer['coins'] as int);
-                            await petCtrl.firestore.updateUser(user);
-                            petCtrl.user.refresh();
-                            
-                            Get.snackbar(
-                              'Payment Successful',
-                              'You bought ${offer['coins']} coins!',
-                              backgroundColor: Colors.greenAccent,
-                              colorText: Colors.black,
-                              snackPosition: SnackPosition.TOP,
-                              margin: const EdgeInsets.all(15),
-                            );
-                          },
-                          fontSize: 16,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
                         ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
-        );
-      },
+                      ),
+
+                      /// ACTION BUTTON
+                      CustomButton(
+                        text: product.price, // Automatically formats local currency symbol (e.g. $0.99, €0.99)
+                        gradientColors: [
+                          Colors.green,
+                          Colors.green[900]!
+                        ],
+                        textStrokeColor: Colors.black,
+                        borderColor: Colors.green[200]!,
+                        onPressed: () {
+                          // Triggers the real Google Play checkout
+                          iapCtrl.buyCoins(product);
+                        },
+                        fontSize: 16,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }),
+        )
+      ],
     );
   }
 
