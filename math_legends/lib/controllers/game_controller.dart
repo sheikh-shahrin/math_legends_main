@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:math_legends/controllers/pet_controller.dart';
 import 'package:math_legends/models/user_model.dart';
@@ -141,6 +142,12 @@ class GameController extends GetxController {
 
   final earnedCoins = 0.obs;
 
+  // --- POTION VARIABLES ---
+  final totalCoins = 0.obs; // Tracks total coins reactively during the game
+  final int timeCost = 100;
+  final int timeReward = 15;
+  // ------------------------
+
   // --------------------------
   // START / STOP
   // --------------------------
@@ -150,6 +157,7 @@ class GameController extends GetxController {
     required int levelNumber,
   }) {
     user = userModel;
+    totalCoins.value = user.coins ?? 0; 
     currentChapter.value = chapter;
     level.value = levelNumber;
 
@@ -190,6 +198,59 @@ class GameController extends GetxController {
     endReason.value = LevelEndReason.timeUp;
 
     _applyEnd(); // DO NOT submitAnswer()
+  }
+
+  // --------------------------
+  // POTIONS / POWER-UPS
+  // --------------------------
+  Future<void> buyExtraTime() async {
+    // 1. Prevent buying if the level is already over
+    if (endReason.value != LevelEndReason.none) return;
+
+    // 2. Check if the player has enough coins
+    if (totalCoins.value >= timeCost) {
+      
+      // Deduct coins locally
+      totalCoins.value -= timeCost;
+      user.coins = totalCoins.value;
+
+      // Add time
+      secondsLeft.value += timeReward;
+
+      // Play success/purchase sound
+      SoundService.playSfx('sounds/purchase.mp3');
+
+      // Save to Firestore IMMEDIATELY. 
+      // (This prevents a cheat where players buy time, win, but force-close the app to keep their coins).
+      await _firestore.updateUserCoins(uid: user.uid!, coins: totalCoins.value);
+
+      // Show success message
+      Get.snackbar(
+        'Time Added!',
+        '+$timeReward seconds. Keep going!',
+        backgroundColor: Colors.greenAccent[700]?.withOpacity(0.9),
+        colorText: Colors.black,
+        snackPosition: SnackPosition.TOP,
+        margin: const EdgeInsets.all(12),
+        duration: const Duration(seconds: 2),
+      );
+      
+    } else {
+      
+      // Play error sound
+      SoundService.playSfx('sounds/error_sound.mp3');
+      
+      // Show error message
+      Get.snackbar(
+        'Not Enough Coins',
+        'You need $timeCost coins to buy more time.',
+        backgroundColor: Colors.redAccent.withOpacity(0.9),
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        margin: const EdgeInsets.all(12),
+        duration: const Duration(seconds: 2),
+      );
+    }
   }
 
   // --------------------------

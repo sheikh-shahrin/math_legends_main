@@ -206,6 +206,18 @@ class PlayLevelPage extends StatelessWidget {
               strokeColor: Colors.black,
               strokeWidth: 3,
             )),
+        Obx(() => StrokeText(
+              '🪙 ${game.totalCoins.value}',
+              fontSize: 16,
+              fillColor: Colors.amberAccent,
+              strokeColor: Colors.black,
+              strokeWidth: 3,
+            )),
+        BuyTimeButton(
+          coinCost: game.timeCost,
+          timeToAdd: game.timeReward,
+          onBuyAttempt: () => game.buyExtraTime(), // Calls our new method!
+        )
       ],
     );
   }
