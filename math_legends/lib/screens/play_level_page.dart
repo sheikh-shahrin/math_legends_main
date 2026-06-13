@@ -181,48 +181,11 @@ class PlayLevelPage extends StatelessWidget {
             ),
           ),
         ),
-      ],
-    );
-  }
-
-  // =========================
-  // HUD
-  // =========================
-  Widget _topHud(GameController game) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Obx(() => StrokeText(
-                  'Round ${game.round.value}/${GameData.roundsPerLevel}',
-                  fontSize: 16,
-                  fillColor: Colors.white,
-                  strokeColor: Colors.black,
-                  strokeWidth: 3,
-                )),
-            Obx(() => StrokeText(
-                  _fmt(game.secondsLeft.value),
-                  fontSize: 16,
-                  fillColor: Colors.yellowAccent,
-                  strokeColor: Colors.black,
-                  strokeWidth: 3,
-                )),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Obx(() => StrokeText(
-              '🪙 ${game.totalCoins.value}',
-              fontSize: 16,
-              fillColor: Colors.amberAccent,
-              strokeColor: Colors.black,
-              strokeWidth: 3,
-            )),
-        const SizedBox(height: 8),
-        // Buy Potion Button
+        const SizedBox(height: 14),
         CustomButton(
           onPressed: () => game.buyExtraTime(),
           text: '+15 Seconds (100 Coins)',
+          btnWidth: MediaQuery.of(context).size.height * 0.75,
 
           // Timer theme colors (Required by your constructor)
           gradientColors: [Colors.cyan.shade400, Colors.blue.shade700],
@@ -233,6 +196,31 @@ class PlayLevelPage extends StatelessWidget {
           fontSize: 14,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         ),
+      ],
+    );
+  }
+
+  // =========================
+  // HUD
+  // =========================
+  Widget _topHud(GameController game) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Obx(() => StrokeText(
+              'Round ${game.round.value}/${GameData.roundsPerLevel}',
+              fontSize: 16,
+              fillColor: Colors.white,
+              strokeColor: Colors.black,
+              strokeWidth: 3,
+            )),
+        Obx(() => StrokeText(
+              _fmt(game.secondsLeft.value),
+              fontSize: 16,
+              fillColor: Colors.yellowAccent,
+              strokeColor: Colors.black,
+              strokeWidth: 3,
+            )),
       ],
     );
   }
