@@ -222,7 +222,7 @@ class PlayLevelPage extends StatelessWidget {
         // Buy Potion Button
         CustomButton(
           onPressed: () => game.buyExtraTime(),
-          text: '+15 Seconds\n(100 Coins)',
+          text: '+15 Seconds (100 Coins)',
 
           // Timer theme colors (Required by your constructor)
           gradientColors: [Colors.cyan.shade400, Colors.blue.shade700],
