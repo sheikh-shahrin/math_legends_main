@@ -157,7 +157,7 @@ class GameController extends GetxController {
     required int levelNumber,
   }) {
     user = userModel;
-    totalCoins.value = user.coins ?? 0; 
+    totalCoins.value = user.coins ?? 0;
     currentChapter.value = chapter;
     level.value = levelNumber;
 
@@ -209,7 +209,6 @@ class GameController extends GetxController {
 
     // 2. Check if the player has enough coins
     if (totalCoins.value >= timeCost) {
-      
       // Deduct coins locally
       totalCoins.value -= timeCost;
       user.coins = totalCoins.value;
@@ -220,7 +219,7 @@ class GameController extends GetxController {
       // Play success/purchase sound
       SoundService.playSfx('sounds/purchase.mp3');
 
-      // Save to Firestore IMMEDIATELY. 
+      // Save to Firestore IMMEDIATELY.
       // (This prevents a cheat where players buy time, win, but force-close the app to keep their coins).
       await _firestore.updateUserCoins(uid: user.uid!, coins: totalCoins.value);
 
@@ -234,12 +233,10 @@ class GameController extends GetxController {
         margin: const EdgeInsets.all(12),
         duration: const Duration(seconds: 2),
       );
-      
     } else {
-      
       // Play error sound
       SoundService.playSfx('sounds/error_sound.mp3');
-      
+
       // Show error message
       Get.snackbar(
         'Not Enough Coins',
@@ -887,27 +884,35 @@ class GameController extends GetxController {
   Future<void> advancePlayerProgress() async {
     final stats = user.playStats ?? PlayStats(1, 1);
 
-    int chapter = stats.chapter!;
-    int stage = stats.stage!;
+    int maxChapter = stats.chapter!;
+    int maxStage = stats.stage!;
 
-    // advance stage
-    if (stage < GameData.levelsPerChapter) {
-      stage += 1;
-    } else {
-      // finished last stage → next chapter
-      chapter += 1;
-      stage = 1;
+    // Get the chapter and level the user JUST played
+    final playedChapterId = currentChapter.value!.id;
+    final playedStage = level.value;
+
+    // Check if the user just beat their HIGHEST unlocked level.
+    // If they replay an old level, this ensures their progress doesn't falsely advance.
+    if (playedChapterId == maxChapter && playedStage == maxStage) {
+      // advance stage
+      if (maxStage < GameData.levelsPerChapter) {
+        maxStage += 1;
+      } else {
+        // finished last stage → next chapter
+        maxChapter += 1;
+        maxStage = 1;
+      }
+
+      // update local user
+      user.playStats = PlayStats(maxChapter, maxStage);
+
+      // persist to Firestore
+      await _firestore.updateUserPlayStats(
+        uid: user.uid!,
+        chapter: maxChapter,
+        stage: maxStage,
+      );
     }
-
-    // update local user
-    user.playStats = PlayStats(chapter, stage);
-
-    // persist to Firestore
-    await _firestore.updateUserPlayStats(
-      uid: user.uid!,
-      chapter: chapter,
-      stage: stage,
-    );
   }
 
   double get petMultiplier {
