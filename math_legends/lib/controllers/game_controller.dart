@@ -457,8 +457,8 @@ class GameController extends GetxController {
     final petMult = petMultiplier;
     final chapterMult = currentChapter.value!.multiplier;
 
-    earnedXp.value += 10 * chapterMult * petMult;
-    earnedRp.value += isRight ? 10 * chapterMult * petMult : -5 * chapterMult;
+    earnedXp.value += 5 * chapterMult * petMult;
+    earnedRp.value += isRight ? 5 * chapterMult * petMult : -4 * chapterMult;
 
     final baseCoins = isRight ? 5 : 0;
     earnedCoins.value += (baseCoins * chapterMult * petMult).round();
@@ -553,8 +553,8 @@ class GameController extends GetxController {
 
     final petMult = petMultiplier;
 
-    earnedXp.value += isRight ? 10 * mult * petMult : 0;
-    earnedRp.value += isRight ? 10 * mult * petMult : -5 * mult;
+    earnedXp.value += isRight ? 5 * mult * petMult : 0;
+    earnedRp.value += isRight ? 5 * mult * petMult : -4 * mult;
 
     final baseCoins = isRight ? 5 : 0;
     earnedCoins.value += (baseCoins * mult * petMult).round();
