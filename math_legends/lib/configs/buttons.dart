@@ -345,10 +345,15 @@ class SquareTextContainer extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: textStyle,
+      // --- WRAPPED IN FITTEDBOX HERE ---
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: textStyle,
+        ),
       ),
     );
   }
