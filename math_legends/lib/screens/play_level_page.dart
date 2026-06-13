@@ -184,8 +184,8 @@ class PlayLevelPage extends StatelessWidget {
         const SizedBox(height: 14),
         CustomButton(
           onPressed: () => game.buyExtraTime(),
-          text: '+15 Seconds (100 Coins)',
-          btnWidth: MediaQuery.of(context).size.height * 0.75,
+          text: '⌛ +15 Seconds (100 Coins)',
+          btnWidth: MediaQuery.of(context).size.height * 0.7,
 
           // Timer theme colors (Required by your constructor)
           gradientColors: [Colors.cyan.shade400, Colors.blue.shade700],
@@ -193,7 +193,7 @@ class PlayLevelPage extends StatelessWidget {
           textStrokeColor: Colors.black,
 
           // Overriding your defaults to make it small enough for the top HUD
-          fontSize: 14,
+          fontSize: 21,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         ),
       ],
