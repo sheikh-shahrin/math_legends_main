@@ -182,20 +182,29 @@ class PlayLevelPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 14),
-        CustomButton(
-          onPressed: () => game.buyExtraTime(),
-          text: '⌛ +15 Seconds (100 Coins)',
-          btnWidth: MediaQuery.of(context).size.height * 0.7,
+        Obx(() {
+          if (game.endReason.value == LevelEndReason.none) {
+            return Center(
+              child: CustomButton(
+                onPressed: () => game.buyExtraTime(),
+                text: '⌛ +15 Seconds (100 Coins)',
+                btnWidth: MediaQuery.of(context).size.width * 0.7,
 
-          // Timer theme colors (Required by your constructor)
-          gradientColors: [Colors.cyan.shade400, Colors.blue.shade700],
-          borderColor: Colors.white,
-          textStrokeColor: Colors.black,
+                // Timer theme colors (Required by your constructor)
+                gradientColors: [Colors.cyan.shade400, Colors.blue.shade700],
+                borderColor: Colors.white,
+                textStrokeColor: Colors.black,
 
-          // Overriding your defaults to make it small enough for the top HUD
-          fontSize: 21,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        ),
+                // Overriding your defaults to make it small enough for the top HUD
+                fontSize: 18,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              ),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        }),
       ],
     );
   }
