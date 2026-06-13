@@ -189,23 +189,28 @@ class PlayLevelPage extends StatelessWidget {
   // HUD
   // =========================
   Widget _topHud(GameController game) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Obx(() => StrokeText(
-              'Round ${game.round.value}/${GameData.roundsPerLevel}',
-              fontSize: 16,
-              fillColor: Colors.white,
-              strokeColor: Colors.black,
-              strokeWidth: 3,
-            )),
-        Obx(() => StrokeText(
-              _fmt(game.secondsLeft.value),
-              fontSize: 16,
-              fillColor: Colors.yellowAccent,
-              strokeColor: Colors.black,
-              strokeWidth: 3,
-            )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Obx(() => StrokeText(
+                  'Round ${game.round.value}/${GameData.roundsPerLevel}',
+                  fontSize: 16,
+                  fillColor: Colors.white,
+                  strokeColor: Colors.black,
+                  strokeWidth: 3,
+                )),
+            Obx(() => StrokeText(
+                  _fmt(game.secondsLeft.value),
+                  fontSize: 16,
+                  fillColor: Colors.yellowAccent,
+                  strokeColor: Colors.black,
+                  strokeWidth: 3,
+                )),
+          ],
+        ),
+        const SizedBox(height: 8),
         Obx(() => StrokeText(
               '🪙 ${game.totalCoins.value}',
               fontSize: 16,
@@ -213,11 +218,21 @@ class PlayLevelPage extends StatelessWidget {
               strokeColor: Colors.black,
               strokeWidth: 3,
             )),
-        BuyTimeButton(
-          coinCost: game.timeCost,
-          timeToAdd: game.timeReward,
-          onBuyAttempt: () => game.buyExtraTime(), // Calls our new method!
-        )
+        const SizedBox(height: 8),
+        // Buy Potion Button
+        CustomButton(
+          onPressed: () => game.buyExtraTime(),
+          text: '+15 Seconds\n(100 Coins)',
+
+          // Timer theme colors (Required by your constructor)
+          gradientColors: [Colors.cyan.shade400, Colors.blue.shade700],
+          borderColor: Colors.white,
+          textStrokeColor: Colors.black,
+
+          // Overriding your defaults to make it small enough for the top HUD
+          fontSize: 14,
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        ),
       ],
     );
   }
